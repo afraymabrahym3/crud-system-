@@ -5,8 +5,10 @@ const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
 const usernameSpan = document.getElementById('username');
 
-// API URL
-const API_URL = 'http://localhost:5000/api';
+// Authentication functions
+const API_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000/api' 
+    : 'https://your-backend-url.com/api';
 
 // Check for token on load
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,45 +24,8 @@ function toggleForms() {
     registerForm.classList.toggle('hidden');
 }
 
-// Handle Login
-async function handleLogin(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
-    try {
-        const response = await fetch(`${API_URL}/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Login failed');
-        }
-
-        // Store token and show main app
-        localStorage.setItem('token', data.token);
-        await fetchUserData();
-        
-    } catch (error) {
-        alert(error.message);
-    }
-}
-
-// Handle Register
-async function handleRegister(event) {
-    event.preventDefault();
-    
-    const username = document.getElementById('register-username').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-
+// Register function
+async function register(username, email, password) {
     try {
         const response = await fetch(`${API_URL}/auth/register`, {
             method: 'POST',
@@ -71,18 +36,58 @@ async function handleRegister(event) {
         });
 
         const data = await response.json();
-
+        
         if (!response.ok) {
             throw new Error(data.message || 'Registration failed');
         }
 
-        // Store token and show main app
         localStorage.setItem('token', data.token);
-        await fetchUserData();
-        
+        return data;
     } catch (error) {
-        alert(error.message);
+        console.error('Registration error:', error);
+        throw error;
     }
+}
+
+// Login function
+async function login(email, password) {
+    try {
+        const response = await fetch(`${API_URL}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.message || 'Login failed');
+        }
+
+        localStorage.setItem('token', data.token);
+        return data;
+    } catch (error) {
+        console.error('Login error:', error);
+        throw error;
+    }
+}
+
+// Logout function
+function logout() {
+    localStorage.removeItem('token');
+    window.location.href = '/login.html';
+}
+
+// Check if user is authenticated
+function isAuthenticated() {
+    return !!localStorage.getItem('token');
+}
+
+// Get auth token
+function getToken() {
+    return localStorage.getItem('token');
 }
 
 // Fetch User Data
@@ -121,4 +126,13 @@ function handleLogout() {
     appContainer.classList.add('hidden');
     document.getElementById('login-email').value = '';
     document.getElementById('login-password').value = '';
-} 
+}
+
+// Export functions
+window.auth = {
+    register,
+    login,
+    logout,
+    isAuthenticated,
+    getToken
+}; 
