@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <title>Product Manager</title>
+</head>
+<body>
+    <div id="auth-container" class="auth-container">
+        <!-- Login Form -->
+        <div id="login-form" class="auth-form">
+            <h2>Login</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <input type="email" id="login-email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" placeholder="Password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a></p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="auth-form hidden">
+            <h2>Register</h2>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <input type="text" id="register-username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="register-email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="register-password" placeholder="Password" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" onclick="toggleForms()">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Main App Container (Initially Hidden) -->
+    <div id="app-container" class="crud hidden">
+        <div class="head">
+            <h2>Product Manager</h2>
+            <p>Welcome, <span id="username"></span>! <a href="#" onclick="handleLogout()">Logout</a></p>
+        </div>
+
+        <div class="inputs">
+            <input type="text" id="title" placeholder="Title" required>
+            
+            <div class="price">
+               <input type="number" id="price" placeholder="Price" oninput="getTotal()" required>
+               <input type="number" id="taxes" placeholder="Taxes" oninput="getTotal()">
+               <input type="number" id="ads" placeholder="Ads" oninput="getTotal()">
+               <input type="number" id="discount" placeholder="Discount" oninput="getTotal()">
+               <small id="total"></small>
+            </div>
+            
+            <input type="number" id="count" placeholder="Count">
+            <input type="text" id="category" placeholder="Category" required>
+            <button id="submit">Create</button>
+        </div>
+
+        <div class="outputs">
+            <div class="searchBlock">
+                <input type="text" id="search" placeholder="Search" oninput="searchData(this.value)">
+                <div class="btnsearch">
+                    <button id="searchtitle" onclick="getSearchMode(this.id)">Search Title</button>
+                    <button id="searchcategory" onclick="getSearchMode(this.id)">Search Category</button>
+                </div>
+            </div>
+            
+            <div id="deleteAll"></div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Taxes</th>
+                        <th>Ads</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th>Category</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <button id="printBtn"><i class="fas fa-file-pdf"></i> Export PDF</button>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
