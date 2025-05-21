@@ -1,111 +1,70 @@
-# Product Manager
+# Product Manager System
 
-A full-stack web application for managing products with user authentication and authorization.
+A full-stack web application for managing products with authentication system.
 
 ## Features
 
 - User Authentication (Register/Login)
-- JWT-based Authorization
-- CRUD Operations for Products
-- Real-time Product Search
-- PDF Export Functionality
-- Responsive Design
-- Secure Password Hashing
-- MongoDB Integration
+- Product Management (CRUD operations)
+- Real-time price calculation
+- PDF Export functionality
+- Search by title or category
+- Modern and responsive UI
 
-## Tech Stack
+## Technologies Used
 
-- **Frontend**: HTML, CSS, JavaScript
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT (JSON Web Tokens)
-- **Password Hashing**: bcryptjs
-- **PDF Generation**: jsPDF
-
-## Prerequisites
-
-- Node.js (v14 or higher)
-- MongoDB (v4 or higher)
-- npm or yarn
+- Frontend: HTML, CSS, JavaScript
+- Backend: Node.js, Express.js
+- Database: MongoDB
+- Authentication: JWT
+- PDF Generation: jsPDF
 
 ## Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/product-manager.git
-   cd product-manager
-   ```
+```bash
+git clone [repository-url]
+cd product-manager
+```
 
 2. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
-3. Create environment file:
-   ```bash
-   cp .env.example .env
-   ```
+3. Create a `.env` file in the root directory with the following content:
+```
+MONGODB_URI=your_mongodb_uri
+PORT=5000
+NODE_ENV=development
+JWT_SECRET=your_secret_key
+CLIENT_URL=http://localhost:5000
+```
 
-4. Update the `.env` file with your configuration:
-   ```
-   PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/product-manager
-   JWT_SECRET=your-super-secret-jwt-key
-   ```
+4. Start the server:
+```bash
+npm start
+```
 
-## Running the Application
+5. Open http://localhost:5000 in your browser
 
-1. Start MongoDB service on your machine
+## Usage
 
-2. Run the application:
-   ```bash
-   # Development mode
-   npm run dev
-
-   # Production mode
-   npm start
-   ```
-
-3. Access the application at `http://localhost:5000`
-
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/user` - Get user data (protected)
-
-### Products
-- `GET /api/products` - Get all products (protected)
-- `POST /api/products` - Create a product (protected)
-- `PUT /api/products/:id` - Update a product (protected)
-- `DELETE /api/products/:id` - Delete a product (protected)
+1. Register a new account or login with existing credentials
+2. Add products using the form
+3. View all products in the table
+4. Search products by title or category
+5. Update or delete existing products
+6. Export product list to PDF
 
 ## Security Features
 
-- JWT-based authentication
-- Password hashing using bcrypt
-- Protected API endpoints
-- Input validation and sanitization
-- MongoDB injection protection
-- CORS enabled
-- Secure HTTP headers
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- Password hashing
+- JWT authentication
+- Rate limiting
+- Input validation
+- XSS protection
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- [Express.js](https://expressjs.com/)
-- [MongoDB](https://www.mongodb.com/)
-- [JWT](https://jwt.io/)
-- [jsPDF](https://github.com/MrRio/jsPDF) 
+MIT License 
